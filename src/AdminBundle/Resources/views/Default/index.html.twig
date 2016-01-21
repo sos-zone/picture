@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js"> 
+    <head>
+        <meta charset="UTF-8" />
+        <title>Вход на сайт</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/css/demo.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/css/style.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/admin/css/animate-custom.css') }}" />
+	</head>
+    <body>
+        <div class="container">
+            <section>				
+                <div id="container_demo" >
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <a class="hiddenanchor" id="tologin"></a>
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                            <form id="loginform"> 
+                                <h1>Вход</h1> 
+                                <p> 
+                                    <label for="email" class="uname" data-icon="u" > Ваш e-mail</label>
+                                    <input id="email" name="email" required="required" type="text" placeholder="new_word@tut.by"/>
+								</p>
+                                <p> 
+                                    <label for="pass" class="youpasswd" data-icon="p"> Ваш пароль </label>
+                                    <input id="pass" name="pass" required="required" type="password" placeholder="например 12345678" /> 
+								</p>
+                                <p class="keeplogin"> 
+									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+									<label for="loginkeeping">Запомнить меня</label>
+								</p>
+                                <p class="login button"> 
+                                    <input type="submit" value="Войти" /> 
+								</p>
+                                <p class="change_link">
+									Не зарегистрированы еще ?
+									<a href="#toregister" class="to_register">Присоединяйтесь</a>
+								</p>
+							</form>
+						</div>
+						
+                        <div id="register" class="animate form">
+                            <form  action="mysuperscript.php" autocomplete="on"> 
+                                <h1> Регистрация </h1> 
+                                <p> 
+                                    <label for="usernamesignup" class="uname" data-icon="u">Ваш логин</label>
+                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="myname1" />
+								</p>
+                                <p> 
+                                    <label for="emailsignup" class="youmail" data-icon="e" > Ваш e-mail</label>
+                                    <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="sitehere.ru@my.com"/> 
+								</p>
+                                <p> 
+                                    <label for="passwordsignup" class="youpasswd" data-icon="p">Ваш пароль </label>
+                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="123456"/>
+								</p>
+                                <p> 
+                                    <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Подтвердите ваш пароль </label>
+                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="123456"/>
+								</p>
+                                <p class="signin button"> 
+									<input type="submit" value="Регистрация"/> 
+								</p>
+                                <p class="change_link">  
+									Уже зарегистрированы ?
+									<a href="#tologin" class="to_register"> Войдите на сайт </a>
+								</p>
+							</form>
+						</div>						
+					</div>
+				</div>  
+			</section>
+		</div>
+
+    <!-- use jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+       $(document).ready(function() {
+            //Send data from login form
+              $('#loginform').submit(function(){
+                
+                  var message = ""; //variable for mistakes
+             
+                  //проверка на корректность email
+                  var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                  var emailаddress = $('#email').val();
+                  if (!pattern.test(emailаddress)) {
+                      message = message + "Email введен не корректно. \n";
+                  }
+
+                  //проверка поля с паролями
+                  if ( $('#pass').val().length < 8 ) {
+                        message = message + "Пароль должен быль более 8 символов. ";
+                  }
+
+
+                  if (message !=="") {
+                    alert("Сообщение:\n" + message);
+                    return false;
+                  } 
+                  else {
+                    $.ajax({
+                      type: "POST",
+                      url: "{{ path('_login') }}",
+                      async: false,
+                      data: $(this).serialize(),
+                      success: function(data) {
+                        if(data == 0 ){
+                          alert("Сообщение:\n Не правильный email или пароль.\n Попробуйте еще раз.");
+                        }
+                        else { 
+                          window.location.href = "{{ path('user_cabinet')}}"
+                        }
+                      }
+                    });
+                    return false;
+                  }
+
+              });
+
+       });
+    </script>
+
+
+
+
+	</body>
+</html>

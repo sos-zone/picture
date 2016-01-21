@@ -1,0 +1,23 @@
+login_form:
+    path:     /
+    defaults: { _controller: AdminBundle:Default:index }
+
+_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:Default:login }
+
+_logout:
+    path:     /logout
+    defaults: { _controller: AdminBundle:Default:logout }
+
+user_cabinet:
+    path:     /cabinet
+    defaults: { _controller: AdminBundle:Default:cabinet }
+
+_loadfile:
+    path:     /loadfile
+    defaults: { _controller: AdminBundle:Default:loadfile }
+
+_delfile:
+    path:     /delfile
+    defaults: { _controller: AdminBundle:Default:delfile }

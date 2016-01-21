@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Usercabinet</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('bundles/admin/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="userinfo col-lg-3 col-sm-12">
+          <h2>Данные пользователя:</h2>
+          ФИО пользователя: <strong>{{ fio }}</strong> <br>
+          Email пользователя: <strong>{{ email }}</strong> <br><br>
+          <a href="{{ path('_logout')}}">Выход</a>
+        </div>
+      <div class="userfile col-lg-9 col-sm-12">
+        <h2>Загруженные файлы:</h2>
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>file_id</th>
+              <th>file_name</th>
+              <th>file_url</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for picture in picture %}
+              <tr>
+                <td>1</td>
+                <td>{{ picture.id }}</td>
+                <td>{{ picture.filename }}</td>
+                <td>{{ picture.filepath }}</td>
+                <td><a href="{{ path('_delfile')}}?fileid={{ picture.id }}">Удалить</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+        
+
+
+        <h2>Загрузка файла </h2>
+        <form method="post" enctype='multipart/form-data' action="{{ path('_loadfile') }}">
+        Выберите файл (тип файлов: jpeg, jpg, png; max размер: 1MB ):
+        <span style="color:red;"> {{ file_err }}</span>
+        <input type='file' name='filename' size='10' /><br /><br />
+        <input type='submit' value='Загрузить' />
+        </form>
+
+      </div>
+
+
+
+      </div>
+    </div>
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ asset('bundles/admin/js/bootstrap/bootstrap.min.js') }}"></script>
+  </body>
+</html>
